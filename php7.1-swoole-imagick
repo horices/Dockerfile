@@ -1,0 +1,12 @@
+FROM php:7.1-fpm-alpine
+
+WORKDIR /var/www/html
+
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
+RUN apk add make autoconf gcc musl-dev g++
+
+# install imagick support gif 
+RUN set -ex && wget http://www.feadi.com/soft/freetype-2.8.1.tar.gz   && mkdir build && tar -xzf freetype-2.8.1.tar.gz -C ./build --strip-components 1 && cd build &&  ./configure && make && make install && cd .. &&  rm -r build
+RUN set -ex && wget http://www.feadi.com/soft/ImageMagick.tar.gz  &&  mkdir build && tar -xzf ImageMagick.tar.gz -C ./build --strip-components 1 && cd build &&  ./configure && make && make install && cd .. && rm -r build
+# install swoole
+RUN set -ex && wget http://www.feadi.com/soft/swoole-src-4.3.5.tar.gz  &&  mkdir build && tar -xzf swoole-src-4.3.5.tar.gz -C ./build --strip-components 1 && cd build && phpize &&  ./configure && make && make install && cd .. && rm -r build
