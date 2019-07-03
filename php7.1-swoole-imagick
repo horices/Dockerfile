@@ -10,3 +10,4 @@ RUN set -ex && wget http://www.feadi.com/soft/freetype-2.8.1.tar.gz   && mkdir b
 RUN set -ex && wget http://www.feadi.com/soft/ImageMagick.tar.gz  &&  mkdir build && tar -xzf ImageMagick.tar.gz -C ./build --strip-components 1 && cd build &&  ./configure && make && make install && cd .. && rm -r build
 # install swoole
 RUN set -ex && wget http://www.feadi.com/soft/swoole-src-4.3.5.tar.gz  &&  mkdir build && tar -xzf swoole-src-4.3.5.tar.gz -C ./build --strip-components 1 && cd build && phpize &&  ./configure && make && make install && cd .. && rm -r build
+RUN pecl install imagick &&  docker-php-ext-install opcache && docker-php-ext-enable opcache imagick swoole 
